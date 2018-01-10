@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post-preview">
+        <h1 class="post-title"> <a class="btn btn-default" href=""><span
+                class="glyphicon glyphicon-pencil">{{ post.title }}</span></a></h1>
+        <p>{{ post.text|safe }}</p>
+        {% if post.created %}
+            <p class="post-meta">Опубликовано {{ post.created }}</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

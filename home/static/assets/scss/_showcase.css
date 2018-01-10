@@ -1,0 +1,12 @@
+.showcase-page {
+	.showcase-page-header {
+		background-color: rgba(2, 2, 2, 0.7);
+	}
+
+	.content-box {
+		display: block;
+		margin-bottom: 45px;
+
+
+	}
+}

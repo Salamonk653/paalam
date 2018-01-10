@@ -1,0 +1,43 @@
+<hr>
+
+<style>
+
+    .st-custom-button[data-network] {
+        background-color: #3B5998;
+        display: inline-block;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #fff;
+        border-radius: 25px;
+
+    &
+    :hover,
+
+    &
+    :focus {
+        text-decoration: underline;
+        background-color: #00c7ff;
+    }
+    
+
+    }
+    .ok[data-network='odnoklassniki'] {
+        background-color: #ee8208;
+    }
+    .google[data-network='googleplus'] {
+           background-color: #dc4e41;
+    }
+    .twit[data-network='twitter'] {
+    background-color: #55acee;
+}
+
+</style>
+
+<div data-network="facebook" class="st-custom-button">Facebook</div>
+<div data-network="twitter" class="st-custom-button twit">Twitter</div>
+<div data-network="odnoklassniki" class="st-custom-button ok">OK</div>
+<div data-network="googleplus" class="st-custom-button google">Google+</div>
+
+<hr>
+<div class="sharethis-inline-share-buttons"></div>

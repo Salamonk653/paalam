@@ -1,0 +1,9 @@
+{% load bootstrap3 %}
+    <ul class="list-group">
+        <li class="list-group-item active"><strong>Популярные публикации за неделю</strong></li>
+        {% for pop_post in popular_list %}
+            <li class="list-group-item">
+                <a href="{% url 'post' id=pop_post.id %}">{{ pop_post.post__title }}</a>
+            </li>
+        {% endfor %}
+    </ul>

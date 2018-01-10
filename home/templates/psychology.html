@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Ден-соолук категориясы{% endblock %}
+{% block content %}
+
+    {% include 'generic/col-cm-6.html' %}
+
+    <div class=" col-lg-offset-5">
+        {% load bootstrap3 %}
+        {% bootstrap_pagination page_obj %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,461 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block head %}
+    <!-- Share Buttons -->
+    <script type="text/javascript"
+            src="//platform-api.sharethis.com/js/sharethis.js#property=59786357e29218001169f76f&product=inline-share-buttons"></script>
+{% endblock %}
+{% block content %}
+{#    <a href="/admin/" style="position: right;">Admin</a>#}
+    {#  <p>Hello {{ user.username }}!</p>#}
+    {#    <a href="{% provsluger_login_url "facebook" method="oauth2" %}"> Войти через Facebook </a>#}
+{#    <br>#}
+{#    {% if user.is_authenticated %}#}
+{#        <a href="{% url 'post_new' %}" class="top-menu">Добавить статью</a>#}
+{#    {% endif %}#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+        #myCanvas {
+            height: 45%;
+            width: 100%;
+            max-width: 100%;
+            min-width: 800px;
+            position: absolute;
+            bottom: 0%;
+        }
+
+        .sylka:hover {
+            margin: 1em auto 1em;
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid grey;
+            box-shadow: 20px -15px 10px 5px rgba(0, 0, 0, .4);
+        }
+
+
+    </style>
+
+
+
+    <section style="background-color: black;position: relative">
+        {#            <img class="mySlides" src="{% static 'Cities_Kuala_Lumpur_Malaysia.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_City_at_night.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_London__View_of_Tower_Bridge.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_Petronas_Towers__Kuala_Lumpur.jpg' %}"#}
+        {#                 style="width:100%">#}
+        <img src="{% static 'logo.png' %}" alt="logo" class="mySlides"
+             style="width: 60%;height: 45%;padding-top: 50px;margin-left: 18%">
+        <canvas id="myCanvas" height="200" width="800"></canvas>
+    </section>
+
+
+    <script>
+        console.clear();
+
+        canvasWidth = 1600;
+        canvasHeight = 200;
+
+        pCount = 0;
+
+
+        pCollection = new Array();
+
+        var puffs = 1;
+        var particlesPerPuff = 2000;
+        var img = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/85280/smoke2.png';
+
+        var smokeImage = new Image();
+        smokeImage.src = img;
+
+        for (var i1 = 0; i1 < puffs; i1++) {
+            var puffDelay = i1 * 1500; //300 ms between puffs
+
+            for (var i2 = 0; i2 < particlesPerPuff; i2++) {
+                addNewParticle((i2 * 50) + puffDelay);
+            }
+        }
+
+
+        draw(new Date().getTime(), 3000)
+
+
+        function addNewParticle(delay) {
+
+            var p = {};
+            p.top = canvasHeight;
+            p.left = randBetween(-200, 800);
+
+            p.start = new Date().getTime() + delay;
+            p.life = 8000;
+            p.speedUp = 30;
+
+
+            p.speedRight = randBetween(0, 20);
+
+            p.rot = randBetween(-1, 1);
+            p.red = Math.floor(randBetween(0, 255));
+            p.blue = Math.floor(randBetween(0, 255));
+            p.green = Math.floor(randBetween(0, 255));
+
+
+            p.startOpacity = .3
+            p.newTop = p.top;
+            p.newLeft = p.left;
+            p.size = 200;
+            p.growth = 10;
+
+            pCollection[pCount] = p;
+            pCount++;
+
+
+        }
+
+        function draw(startT, totalT) {
+            //Timing
+            var timeDelta = new Date().getTime() - startT;
+            var stillAlive = false;
+
+            //Grab and clear the canvas
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, c.width, c.height);
+            c.width = c.width;
+
+            //Loop through particles
+            for (var i = 0; i < pCount; i++) {
+                //Grab the particle
+                var p = pCollection[i];
+
+                //Timing
+                var td = new Date().getTime() - p.start;
+                var frac = td / p.life
+
+                if (td > 0) {
+                    if (td <= p.life) {
+                        stillAlive = true;
+                    }
+
+                    //attributes that change over time
+                    var newTop = p.top - (p.speedUp * (td / 1000));
+                    var newLeft = p.left + (p.speedRight * (td / 1000));
+                    var newOpacity = Math.max(p.startOpacity * (1 - frac), 0);
+
+                    var newSize = p.size + (p.growth * (td / 1000));
+                    p.newTop = newTop;
+                    p.newLeft = newLeft;
+
+                    //Draw!
+                    ctx.fillStyle = 'rgba(150,150,150,' + newOpacity + ')';
+                    ctx.globalAlpha = newOpacity;
+                    ctx.drawImage(smokeImage, newLeft, newTop, newSize, newSize);
+                }
+            }
+
+
+            //Repeat if there's still a living particle
+            if (stillAlive) {
+                requestAnimationFrame(function () {
+                    draw(startT, totalT);
+                });
+            }
+            else {
+                clog(timeDelta + ": stopped");
+            }
+        }
+
+        function randBetween(n1, n2) {
+            var r = (Math.random() * (n2 - n1)) + n1;
+            return r;
+        }
+
+        function randOffset(n, variance) {
+            //e.g. variance could be 0.1 to go between 0.9 and 1.1
+            var max = 1 + variance;
+            var min = 1 - variance;
+            var r = Math.random() * (max - min) + min;
+            return n * r;
+        }
+
+        function clog(s) {
+            console.log(s);
+        }
+    </script>
+
+
+
+    <div class="main">
+        <section class="module bg-dark-60 blog-page-header" data-background="assets/images/blog_bg.jpg"
+                 style="background-image: url(&quot;assets/images/blog_bg.jpg&quot;);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h2 class="module-title font-alt">Blog Grid</h2>
+                        <div class="module-subtitle font-serif">A wonderful serenity has taken possession of my
+                            entire
+                            soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="module">
+            <div class="container">
+                <div class="row multi-columns-row post-columns">
+                    {% for post in article_lists %}
+
+
+
+
+
+
+
+
+                        <!-- Band Description -->
+                        {#    <section class="w3-container w3-center w3-content" style="max-width:600px">#}
+                        {#        <h2 class="w3-wide">THE BAND</h2>#}
+                        {#        <p class="w3-opacity"><i>We love music</i></p>#}
+                        {#        <p class="w3-justify">We have created a fictional band website. Lorem ipsum dolor sit amet, consectetur#}
+                        {#            adipiscing#}
+                        {#            elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis#}
+                        {#            nostrud#}
+                        {#            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit#}
+                        {#            in#}
+                        {#            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,#}
+                        {#            sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod#}
+                        {#            tempor#}
+                        {#            incididunt ut labore et dolore magna aliqua.</p>#}
+                        {#    </section>#}
+                        {##}
+                        {#    <!-- Band Members -->#}
+                        {#    <section class="w3-row-padding w3-center w3-light-grey">#}
+                        {#        <article class="w3-third">#}
+                        {#            <p>John</p>#}
+                        {#            <a href="#"><img class="sylka" src="{% static 'Cities_London__View_of_Tower_Bridge.jpg' %}" alt="Random Name"#}
+                        {#                             style="width:100%"></a>#}
+                        {#            <p>John is the smartest.</p>#}
+                        {#        </article>#}
+                        {#        <article class="w3-third">#}
+                        {#            <p>Paul</p>#}
+                        {#            <img class="sylka" src="{% static 'Cities_City_at_night.jpg' %}" alt="Random Name" style="width:100%">#}
+                        {#            <p>Paul is the prettiest.</p>#}
+                        {#        </article>#}
+                        {#        <article class="w3-third">#}
+                        {#            <p>Ringo</p>#}
+                        {#            <img class="sylka" src="{% static 'Cities_Kuala_Lumpur_Malaysia.jpg' %}" alt="Random Name" style="width:100%">#}
+                        {#            <p>Ringo is the funniest.</p>#}
+                        {#        </article>#}
+                        {#    </section>#}
+
+                        <!-- Footer -->
+
+
+
+                        <div class="col-sm-6 col-md-4 col-lg-4">
+                            <div class="post">
+                                <div class="post-thumbnail"><a href="#"><img
+                                        src="{{ post.image.url }}"
+                                        alt="Blog-post Thumbnail"></a></div>
+                                <div class="post-header font-alt">
+                                    <h2 class="post-title"><a href="{% url 'post_single' id=post.id %}">
+                                        {{ post.title }}
+                                    </a></h2>
+                                    <div class="post-meta">Автору&nbsp;<a
+                                            href="#">{{ post.user }}</a>&nbsp;| {{ post.created }}
+                                    </div>
+                                </div>
+                                <div class="post-entry">
+                                    <p>{{ post.text|linebreaksbr }}</p>
+                                </div>
+                                <div class="post-more"><a class="more-link"
+                                                          href="{% url 'post_single' id=post.id %}">Толук окуу</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <script>
+                            // Automatic Slideshow - change image every 3 seconds
+                            var myIndex = 0;
+                            carousel();
+
+                            function carousel() {
+                                var i;
+                                var x = document.getElementsByClassName("mySlides");
+                                for (i = 0; i < x.length; i++) {
+                                    x[i].style.display = "none";
+                                }
+                                myIndex++;
+                                if (myIndex > x.length) {
+                                    myIndex = 1
+                                }
+                                x[myIndex - 1].style.display = "block";
+                                setTimeout(carousel, 3000);
+                            }
+                        </script>
+
+
+
+                        {#                        <a href="{% url 'post_edit' id=post.id %}">Изменить</a>#}
+                        {#                        <br>#}
+                        {#                        <a href="{% url 'post_delete' id=post.id %}">Удалить</a>#}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+    <div class="pagination font-alt"><a href="#"><i class="fa fa-angle-left"></i></a><a
+            class="active"
+            href="#">1</a><a
+            href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#"><i
+            class="fa fa-angle-right"></i></a>
+    </div>
+    </div>
+    <br>
+    <hr>
+
+    <div>
+        {#        {% include "paginator_digg.html" %}#}
+    </div>
+    <style>
+        ::-webkit-scrollbar {
+            wslugth: 2px;
+            height: 2px;
+        }
+
+        ::-webkit-scrollbar-button {
+            wslugth: 2px;
+            height: 2px;
+        }
+
+        div {
+            box-sizing: border-box;
+        }
+
+        .horizontal-scroll-wrapper {
+            display: block;
+            top: 0;
+            left: 0;
+            wslugth: 40px;
+            max-height: 500px;
+            margin: 0;
+            background: #abc;
+            overflow-y: auto;
+            overflow-x: hslugden;
+            transform: rotate(-90deg) translateY(-80px);
+            transform-origin: right top;
+        }
+
+        .horizontal-scroll-wrapper > div {
+            display: block;
+            padding: 5px;
+            background: #cab;
+            transform: rotate(90deg);
+            transform-origin: right top;
+        }
+
+        .squares {
+            padding: 60px 0 0 0;
+        }
+
+        .squares > div {
+            wslugth: 30px;
+            height: 30px;
+            margin: 10px;
+        }
+
+        .squares > .previous {
+            wslugth: 50px;
+            height: 30px;
+        }
+
+    </style>
+
+    {#        <div class="pagination">#}
+    {##}
+    {##}
+    {#            {{ article_lists.number }} я страница из {{ article_lists.paginator.num_pages }}#}
+    {#            {% for page in article_lists.paginator.page_range %}#}
+    {#                {% if article_lists.number != page %}#}
+    {#                    <a href="?page={{ page }}">{{ page }}</a>#}
+    {#                {% endif %}#}
+    {#            {% endfor %}#}
+    {#            {{ article_lists.start_index }} to {{ article_lists.end_index }} of {{ article_lists.paginator.count }}#}
+    {##}
+    {#            <div class="1">#}
+    {#                {% if article_lists.number == 1 %}#}
+    {#                    <div class="previous">Назад</div>#}
+    {#                {% elif article_lists.has_previous %}#}
+    {#                    <div class="previous"><a href="?page={{ article_lists.previous_page_number }}">Назад</a></div>#}
+    {#                {% endif %}#}
+    {#                {% for linkpage in article_lists.paginator.page_range %}#}
+    {##}
+    {#                    {% if linkpage < 6 %}#}
+    {#                        {% if article_lists.number == linkpage %}#}
+    {#                            <div class="current">#}
+    {#                                <span class="current">{{ linkpage }}</span>#}
+    {#                            </div>#}
+    {#                        {% else %}#}
+    {#                            <div>#}
+    {#                                <a href="?page={{ linkpage }}">{{ linkpage }}</a>#}
+    {#                            </div>#}
+    {#                        {% endif %}#}
+    {#                    {% endif %}#}
+    {#                {% endfor %}#}
+    {#                {% if article_lists.has_next %}#}
+    {#                    <div class="next"><a href="?page={{ article_lists.next_page_number }}">Вперед</a></div>#}
+    {#                {% endif %}#}
+    {#            </div>#}
+    {##}
+    {##}
+    {#        </div>#}
+
+    <hr>
+    {#    <div>{% load paginator %}{% paginator 3 %}</div>#}
+
+    {#    {% bootstrap_pagination article_lists %}#}
+
+{% endblock %}

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{% static "img/logotip.png" %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/w3.css" %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/components-font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>{% block title %}{% endblock %}Document</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+
+<style>
+
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    img {
+        margin-bottom: 0px;
+    }
+
+    #navbar {
+        position: fixed;
+        border-radius: 0px;
+        width: 100%;
+        background-color: rgba(10, 10, 10, 0.9);
+    }
+
+    .main_mnu_button {
+        background-color: transparent;
+        border: medium none;
+        font-size: 26px;
+        color: #fff;
+        padding: 8px 15px 0;
+    }
+
+    .maian_mnu {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .maian_mnu a {
+        color: #fff;
+        padding: 15px;
+        display: block;
+        -webkit-transition: all .25s;
+        -o-transition: all .25s;
+        transition: all .25s;
+    }
+
+    .maian_mnu ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        float: left;
+        text-transform: uppercase;
+    }
+
+    .maian_mnu ul li {
+        display: inline-block;
+    }
+
+    .maian_mnu ul {
+        z-index: 12;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .maian_mnu ul {
+            background-color: rgba(10, 10, 10, 0.9);
+            display: none;
+            position: absolute;
+            width: 100%;
+            margin-top: 54px;
+        }
+
+        .maian_mnu ul li {
+            display: block;
+            text-align: center;
+
+        }
+
+        .dropdown1 {
+            margin-left: 38%;
+        }
+
+    }
+
+    @media only screen and (min-width: 992px) {
+        .maian_mnu ul {
+            display: block !important;
+        }
+    }
+
+    .maian_mnu a:hover {
+        color: red;
+    }
+
+
+</style>
+
+{#_________________NAVBAR___________________________________________________________#}
+<nav class="maian_mnu clearfix navbar-custom" id="navbar">
+
+    <button class="main_mnu_button hidden-md hidden-lg" style="float:right;"><i class="fa fa-bars"></i></button>
+    <ul style="display: none" class="navbar-right">
+
+
+        <li class="active"><a href="{% url 'family' %}">Сайт жөнүндө</a></li>
+        <div class="dropdown1">
+            <div class="dropbtn">категориялар
+                <i class="fa fa-caret-down"></i>
+            </div>
+            <div class="dropdown1-content">
+                <a href="{% url 'family' %}">Үй-бүлө</a>
+                <a href="{% url 'health' %}">Ден-соолук</a>
+                <a href="{% url 'psychology' %}">Психология</a>
+            </div>
+        </div>
+
+    </ul>
+    <a class="navbar-brand" href="/" style="letter-spacing: 1px">Пикирл<span style="color: red">е</span>р
+        аала<span style="color: red">м</span>ы</a>
+</nav>
+{#_________________NAVBAR_END__________________________________________________________#}
+
+
+<style>
+
+
+    .dropdown1 {
+        float: left;
+        overflow: hidden;
+        height: 49px;
+    }
+
+    .dropdown1 .dropbtn {
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: "Roboto Condensed", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 11px;
+    }
+
+    .dropbtn:hover {
+        color: red;
+    }
+
+    .dropdown1-content {
+        margin-top: 3px;
+        display: none;
+        position: absolute;
+        background-color: rgba(10, 10, 10, 0.9);
+        color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown1-content a {
+        float: none;
+        color: white;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .dropdown1-content a:hover {
+        background-color: rgba(10, 10, 10, 0.9);
+    }
+
+    .dropdown1:hover .dropdown1-content {
+        display: block;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+    <style>
+        #myCanvas {
+            height: 45%;
+            width: 100%;
+            max-width: 100%;
+            min-width: 800px;
+            position: absolute;
+            bottom: 0%;
+        }
+
+        .sylka:hover {
+            margin: 1em auto 1em;
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid grey;
+            box-shadow: 20px -15px 10px 5px rgba(0, 0, 0, .4);
+        }
+
+
+    </style>
+
+
+
+    <section style="background-color: black;position: relative">
+        {#            <img class="mySlides" src="{% static 'Cities_Kuala_Lumpur_Malaysia.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_City_at_night.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_London__View_of_Tower_Bridge.jpg' %}"#}
+        {#                 style="width:100%">#}
+        {#            <img class="mySlides" src="{% static 'Cities_Petronas_Towers__Kuala_Lumpur.jpg' %}"#}
+        {#                 style="width:100%">#}
+        <img src="{% static 'logo.png' %}" alt="logo" class="mySlides"
+             style="width: 60%;height: 45%;padding-top: 50px;margin-left: 18%">
+        <canvas id="myCanvas" height="200" width="800"></canvas>
+    </section>
+
+
+    <div class="main">
+        <section class="module bg-dark-60 blog-page-header" data-background="assets/images/blog_bg.jpg"
+                 style="background-image: url(&quot;assets/images/blog_bg.jpg&quot;);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h2 class="module-title font-alt">Blog Grid</h2>
+                        <div class="module-subtitle font-serif">A wonderful serenity has taken possession of my
+                            entire
+                            soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% include 'index.html' %}
+        {% include 'generic/col-cm-6.html' %}
+
+    </div>
+    <div class="col-lg-12 col-lg-offset-5">
+        {% load bootstrap3 %}
+        {% bootstrap_pagination page_obj %}
+
+    </div>
+    <br>
+    <hr>
+
+
+
+    <script>
+        // Automatic Slideshow - change image every 3 seconds
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) {
+                myIndex = 1
+            }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 3000);
+        }
+    </script>
+
+
+    {#        <div class="pagination">#}
+    {##}
+    {##}
+    {#            {{ article_lists.number }} я страница из {{ article_lists.paginator.num_pages }}#}
+    {#            {% for page in article_lists.paginator.page_range %}#}
+    {#                {% if article_lists.number != page %}#}
+    {#                    <a href="?page={{ page }}">{{ page }}</a>#}
+    {#                {% endif %}#}
+    {#            {% endfor %}#}
+    {#            {{ article_lists.start_index }} to {{ article_lists.end_index }} of {{ article_lists.paginator.count }}#}
+    {##}
+    {#            <div class="1">#}
+    {#                {% if article_lists.number == 1 %}#}
+    {#                    <div class="previous">Назад</div>#}
+    {#                {% elif article_lists.has_previous %}#}
+    {#                    <div class="previous"><a href="?page={{ article_lists.previous_page_number }}">Назад</a></div>#}
+    {#                {% endif %}#}
+    {#                {% for linkpage in article_lists.paginator.page_range %}#}
+    {##}
+    {#                    {% if linkpage < 6 %}#}
+    {#                        {% if article_lists.number == linkpage %}#}
+    {#                            <div class="current">#}
+    {#                                <span class="current">{{ linkpage }}</span>#}
+    {#                            </div>#}
+    {#                        {% else %}#}
+    {#                            <div>#}
+    {#                                <a href="?page={{ linkpage }}">{{ linkpage }}</a>#}
+    {#                            </div>#}
+    {#                        {% endif %}#}
+    {#                    {% endif %}#}
+    {#                {% endfor %}#}
+    {#                {% if article_lists.has_next %}#}
+    {#                    <div class="next"><a href="?page={{ article_lists.next_page_number }}">Вперед</a></div>#}
+    {#                {% endif %}#}
+    {#            </div>#}
+    {##}
+    {##}
+    {#        </div>#}
+
+    <hr>
+    {#    <div>{% load paginator %}{% paginator 3 %}</div>#}
+
+    {#    {% bootstrap_pagination article_lists %}#}
+
+{% endblock %}
+
+
+<footer class="w3-container w3-padding-64 w3-center w3-black w3-xlarge">
+    <a href="#"><i class="fa fa-facebook-official"></i></a>
+    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-flickr"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <p class="w3-medium">
+    </p>
+</footer>
+
+
+</body>
+</html>
