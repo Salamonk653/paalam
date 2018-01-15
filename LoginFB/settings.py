@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'uuslug',
     'home',
     'category',
+    'accounts',
+    'base',
     'django.contrib.sites',
     'allauth',
     'allauth.account',

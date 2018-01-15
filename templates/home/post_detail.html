@@ -6,6 +6,7 @@
             src="//platform-api.sharethis.com/js/sharethis.js#property=59786357e29218001169f76f&product=inline-share-buttons"></script>
     {% load bootstrap3 %}
     {% bootstrap_css %}
+    <script src="{% static 'izbrannoe.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 {% endblock %}
@@ -31,10 +32,14 @@
                                 <p>{{ post.text|linebreaksbr }}</p>
 
                             </div>
+                            <div data-id="{{ like_obj.id }}" data-type="article" data-action="bookmark"
+                                 title="Избранное">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span data-count="bookmark">Канча адам избранныйга кошту {{ like_obj.get_bookmark_count }}</span>
+                            </div>
                             {% include 'sharethis.html' %}
                         </div>
                         <div class="comments">
-                            <h4 class="comment-title font-alt">There are 3 comments</h4>
                             <div class="comment clearfix">
                                 {% for comm in comment %}
                                     <div class="comment-avatar"><img
@@ -80,7 +85,7 @@
                             <h5 class="widget-title font-alt">Категориялар</h5>
                             <ul class="icon-list">
                                 {% for single in category %}
-                                <li><a href="#">{{ single.name }}</a></li>
+                                    <li><a href="#">{{ single.name }}</a></li>
                                 {% endfor %}
 
                             </ul>
@@ -132,21 +137,21 @@
                                     href="#" rel="tag">English</a>
                             </div>
                         </div>
-{#                        <div class="widget">#}
-{#                            <h5 class="widget-title font-alt">Text</h5>The languages only differ in their grammar, their#}
-{#                            pronunciation and their most common words. Everyone realizes why a new common language would#}
-{#                            be desirable: one could refuse to pay expensive translators.#}
-{#                        </div>#}
-{#                        <div class="widget">#}
-{#                            <h5 class="widget-title font-alt">Recent Comments</h5>#}
-{#                            <ul class="icon-list">#}
-{#                                <li>Maria on <a href="#">Designer Desk Essentials</a></li>#}
-{#                                <li>John on <a href="#">Realistic Business Card Mockup</a></li>#}
-{#                                <li>Andy on <a href="#">Eco bag Mockup</a></li>#}
-{#                                <li>Jack on <a href="#">Bottle Mockup</a></li>#}
-{#                                <li>Mark on <a href="#">Our trip to the Alps</a></li>#}
-{#                            </ul>#}
-{#                        </div>#}
+                        {#                        <div class="widget">#}
+                        {#                            <h5 class="widget-title font-alt">Text</h5>The languages only differ in their grammar, their#}
+                        {#                            pronunciation and their most common words. Everyone realizes why a new common language would#}
+                        {#                            be desirable: one could refuse to pay expensive translators.#}
+                        {#                        </div>#}
+                        {#                        <div class="widget">#}
+                        {#                            <h5 class="widget-title font-alt">Recent Comments</h5>#}
+                        {#                            <ul class="icon-list">#}
+                        {#                                <li>Maria on <a href="#">Designer Desk Essentials</a></li>#}
+                        {#                                <li>John on <a href="#">Realistic Business Card Mockup</a></li>#}
+                        {#                                <li>Andy on <a href="#">Eco bag Mockup</a></li>#}
+                        {#                                <li>Jack on <a href="#">Bottle Mockup</a></li>#}
+                        {#                                <li>Mark on <a href="#">Our trip to the Alps</a></li>#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
                     </div>
                 </div>
             </div>
