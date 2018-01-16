@@ -24,7 +24,7 @@ SECRET_KEY = 'i=c84wb%@-i)q^od(ghaf&bpr8hk3z(z3#we4!8rcbz(2dz@2_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'paalam.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'paalam.herokuapp.com']
 
 SOCIAL_AUTH_FACEBOOK_KEY = '320360168461901'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c540f4ed84f56647439712bee15058d8'
@@ -64,6 +64,8 @@ INSTALLED_APPS = [
 DISQUS_API_KEY = '***'
 DISQUS_WEBSITE_SHORTNAME = '***'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -73,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'LoginFB.urls'
@@ -151,9 +154,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
-
 
 
 
@@ -169,3 +171,5 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = 1
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
